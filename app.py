@@ -2,6 +2,8 @@ import flask
 from flask import request, jsonify
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
+import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 from sklearn.decomposition import LatentDirichletAllocation
 import scipy
@@ -14,7 +16,7 @@ stopwords_other = ['one', 'mr','image', 'getty', 'de', 'en', 'caption', 'also', 
     'left','right','hand','point','often','talk','head','point','ago','whether','ll','find',':',"didn'",
     'hour','group','became','become','becomes','often','sometimes','usually',"000","said","much","dr"]
 
-my_stopwords = list(set(stopwords.words('English') + stopwords_verbs + stopwords_other))
+my_stopwords = list(set(stopwords.words('english') + stopwords_verbs + stopwords_other))
 
 def runmodel(date,topics):
     
