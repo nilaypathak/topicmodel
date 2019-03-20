@@ -8,6 +8,7 @@ from nltk.corpus import stopwords
 from sklearn.decomposition import LatentDirichletAllocation
 import scipy
 app = flask.Flask(__name__)
+
 x = pd.read_csv('january2019_compiled.csv')
 stopwords_verbs = ['say', 'get', 'go', 'know', 'may', 'need', 'like', 'sit','next','make', 'see', 'want', 'come', 'take', 'use', 'would', 'can','could','find','many','feel','give','still','look','think']
 stopwords_other = ['one', 'mr','image', 'getty', 'de', 'en', 'caption', 'also', 'copyright', 'something','of','s','THE','should','do','ms','week','another','thing','month','day','come',
@@ -45,4 +46,7 @@ def home():
     
     return jsonify(results)
 
-app.run()
+if __name__ == '__main__':
+    # Bind to PORT if defined, otherwise default to 5000.
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
