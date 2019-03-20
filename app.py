@@ -8,7 +8,6 @@ from nltk.corpus import stopwords
 from sklearn.decomposition import LatentDirichletAllocation
 import scipy
 app = flask.Flask(__name__)
-app.config["DEBUG"] = True
 x = pd.read_csv('january2019_compiled.csv')
 stopwords_verbs = ['say', 'get', 'go', 'know', 'may', 'need', 'like', 'sit','next','make', 'see', 'want', 'come', 'take', 'use', 'would', 'can','could','find','many','feel','give','still','look','think']
 stopwords_other = ['one', 'mr','image', 'getty', 'de', 'en', 'caption', 'also', 'copyright', 'something','of','s','THE','should','do','ms','week','another','thing','month','day','come',
