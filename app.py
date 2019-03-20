@@ -1,6 +1,7 @@
 import flask
 from flask import request, jsonify
 import pandas as pd
+import os
 from sklearn.feature_extraction.text import CountVectorizer
 import nltk
 nltk.download('stopwords')
