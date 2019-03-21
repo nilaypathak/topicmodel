@@ -1,5 +1,6 @@
 Flask==0.12.2
 pandas==0.20.3
+Flask_Cors==3.0.3
 scipy==0.19.1
 nltk==3.2.4
 scikit_learn==0.20.3

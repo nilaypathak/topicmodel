@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import os
 from sklearn.feature_extraction.text import CountVectorizer
@@ -9,6 +10,7 @@ from nltk.corpus import stopwords
 from sklearn.decomposition import LatentDirichletAllocation
 import scipy
 app = flask.Flask(__name__)
+CORS(app, support_credentials=True)
 
 x = pd.read_csv('january2019_compiled.csv')
 stopwords_verbs = ['say', 'get', 'go', 'know', 'may', 'need', 'like', 'sit','next','make', 'see', 'want', 'come', 'take', 'use', 'would', 'can','could','find','many','feel','give','still','look','think']
@@ -34,6 +36,7 @@ def runmodel(date,topics):
 
 
 @app.route('/', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def home():
     results = []
     if 'date' in request.args and 'topics' in request.args:
@@ -43,7 +46,7 @@ def home():
         # 'topics':topics})
         results = runmodel(date,topics)
     else:
-        return "Error: No id field provided. Please specify an id."
+        return "Invalid input, please try again."
     
     return jsonify(results)
 
