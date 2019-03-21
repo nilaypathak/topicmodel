@@ -44,9 +44,9 @@ def runmodel(date,topics):
             'topic':row['Topic']
         }
         table.append(subtable)
-        count=count+1
-        if(count>=10):
-            break
+        # count=count+1
+        # if(count>=10):
+        #     break
     results={
         'topicwords':topicwords,
         'table':table
