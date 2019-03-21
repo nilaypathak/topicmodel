@@ -11,7 +11,7 @@ from sklearn.decomposition import LatentDirichletAllocation
 import scipy
 app = flask.Flask(__name__)
 CORS(app, support_credentials=True)
-
+app.config["DEBUG"] = True
 x = pd.read_csv('january2019_compiled.csv')
 stopwords_verbs = ['say', 'get', 'go', 'know', 'may', 'need', 'like', 'sit','next','make', 'see', 'want', 'come', 'take', 'use', 'would', 'can','could','find','many','feel','give','still','look','think']
 stopwords_other = ['one', 'mr','image', 'getty', 'de', 'en', 'caption', 'also', 'copyright', 'something','of','s','THE','should','do','ms','week','another','thing','month','day','come',
@@ -29,9 +29,28 @@ def runmodel(date,topics):
     dtm = cv.fit_transform(npr['compiled'])
     LDA = LatentDirichletAllocation(n_components=topics,random_state=42)
     LDA.fit(dtm)
-    results=[]
+    topicwords=[]
     for index,topic in enumerate(LDA.components_):
-        results.append([cv.get_feature_names()[i] for i in topic.argsort()[-15:]])
+        topicwords.append([cv.get_feature_names()[i] for i in topic.argsort()[-15:]])
+    topic_results = LDA.transform(dtm)
+    npr['Topic'] = topic_results.argmax(axis=1)
+    table=[]
+    count=0
+    for index,row in npr.iterrows():
+        subtable={
+            'title':row['main_headline'],
+            'article':row['article'],
+            'date':row['date'],
+            'topic':row['Topic']
+        }
+        table.append(subtable)
+        count=count+1
+        if(count>=10):
+            break
+    results={
+        'topicwords':topicwords,
+        'table':table
+    }
     return results
 
 
